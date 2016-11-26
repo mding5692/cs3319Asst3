@@ -1,5 +1,4 @@
 *.pyc
-venv
 *~
 .DS_Store
 ignore
