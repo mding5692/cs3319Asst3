@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('AngularFlask', ['angularFlaskServices'])
+angular.module('MovieFlask', ['angularFlaskServices'])
 	.config(['$routeProvider', '$locationProvider',
 		function($routeProvider, $locationProvider) {
 		$routeProvider
@@ -8,28 +8,28 @@ angular.module('AngularFlask', ['angularFlaskServices'])
 			templateUrl: 'static/partials/landing.html',
 			controller: IndexController
 		})
-		.when('/about', {
-			templateUrl: 'static/partials/about.html',
-			controller: AboutController
+		.when('/profile', {
+			templateUrl: 'static/partials/userProfile.html',
+			controller: UserProfileController
 		})
-		.when('/post', {
-			templateUrl: 'static/partials/post-list.html',
-			controller: PostListController
+		.when('/movies', {
+			templateUrl: 'static/partials/moviesWatched.html',
+			controller: MoviesController
 		})
-		.when('/post/:postId', {
-			templateUrl: '/static/partials/post-detail.html',
-			controller: PostDetailController
+		.when('/rate', {
+			templateUrl: '/static/partials/rateMovies.html',
+			controller: RateMovieController
 		})
 		/* Create a "/blog" route that takes the user to the same place as "/post" */
-		.when('/blog', {
-			templateUrl: 'static/partials/post-list.html',
-			controller: PostListController
-		})
-		.otherwise({
+		.when('/search', {
+			templateUrl: 'static/partials/searchShows.html',
+			controller: SearchShowController
+		}).when('/attend', {
+			templateUrl: 'static/partials/attendShow.html',
+			controller: AttendController
+		}).otherwise({
 			redirectTo: '/'
-		})
-		;
+		});
 
 		$locationProvider.html5Mode(true);
-	}])
-;
+	}]);
