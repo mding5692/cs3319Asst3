@@ -35,6 +35,7 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'img/favicon.ico')
 
+# SQL Queries handled below
 
 @app.errorhandler(404)
 def page_not_found(e):
