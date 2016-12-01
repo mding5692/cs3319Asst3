@@ -1,8 +1,9 @@
+<h2>Select your name and show to rate the movie</h2>
 <form id="rateMovieForm" ng-controller="MovieRatingCtrl">
 	<label>Pick your name:</label>	
 	<select ng-model="customerName"></select>
 	<label>Pick the show:</label>
 	<select ng-model="movie"></select>
 	<br>
-	<button ng-click="rateShow()">Rate Movie</button>
+	<button class="btn btn-default" ng-click="rateShow()">Rate Movie</button>
 </form>

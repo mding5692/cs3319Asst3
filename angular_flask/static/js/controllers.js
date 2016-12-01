@@ -19,6 +19,10 @@ function BuyTicketCtrl($scope) {
 	$scope.customerName ="";
 	$scope.showing ="";
 
+	/*$http({
+		method: 'GET',
+	})*/
+
 	$scope.buyTicket = function() {
 		confirmPurchase();
 
