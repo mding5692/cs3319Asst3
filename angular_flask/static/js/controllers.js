@@ -1,5 +1,33 @@
 'use strict';
 
+/* Used methods */
+
+function cleanData(dataArr,dataType) {
+
+	var result = new Array();
+
+	if (dataType === "customers") {
+		for (var i = 0; i < dataArr.length; i++) {
+			result.push(dataArr[i].join(" "));
+		}
+	}
+
+	return result;
+}
+
+function formatDataAsSQLInput(data, dataType) {
+
+	var result = new Array();
+
+	if (dataType === "customers") {
+		result = data.split(" ");
+	}
+
+
+	return result;
+}
+
+
 /* Controllers */
 
 function IndexController($scope) {
@@ -14,12 +42,32 @@ function MoviesController($scope) {
 
 }
 
-function BuyTicketCtrl($scope) {
+function BuyTicketCtrl($scope, $http) {
 
+	$scope.customers = [];
+	$scope.showings = [];
 	$scope.customerName ="";
 	$scope.showing ="";
 
+	$http.get('/getCustomers').then(function(response) {
+        //First function handles success
+        $scope.customers = cleanData(response.data,"customers");
+    }, function(response) {
+        //Second function handles error
+        console.log(response);
+        alert("Unable to grab customers from database");
+    });
+
+	$http.get('/getShowings').then(function(response) {
+        //First function handles success
+        $scope.showings = response.data;
+    }, function(response) {
+        //Second function handles error
+        alert("Unable to grab showings from database");
+    });
+
 	$scope.buyTicket = function() {
+		// asks using the 
 		confirmPurchase();
 
 	};
@@ -31,6 +79,7 @@ function BuyTicketCtrl($scope) {
 		} 
 	}
 
+
 	function showPurchaseSuccess() {
 		alert("Successfully bought ticket");
 	}
@@ -41,8 +90,16 @@ function BuyTicketCtrl($scope) {
 }
 
 function SearchUsrCtrl($scope) {
-	$scope.searchedUsr = "";
+	$scope.searchedCustomer = "";
+	$scope.customers = [];
 
+	$http.get('/getCustomers').then(function(response) {
+        //First function handles success
+        $scope.customers = response.data;
+    }, function(response) {
+        //Second function handles error
+        alert("Unable to grab customers from database");
+    });
 
 
 }

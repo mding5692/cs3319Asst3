@@ -1,6 +1,8 @@
-# AngularJS + Flask Boilerplate App
+# MOVIE-DB
 
-A template for building apps with an Angular frontend and a Flask / python backend.
+Eunsu Shim
+
+Michael Ding
 
 ### How to Get Started
 
