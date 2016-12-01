@@ -1,4 +1,4 @@
-mysql-connector-python==1.0.12
+mysql-connector-python==2.0.4
 
 Flask==0.10.1
 Flask-Restless==0.13.1
