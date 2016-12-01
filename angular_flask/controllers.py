@@ -26,26 +26,7 @@ session = api_manager.session
 @app.route('/attend')
 
 def basic_pages(**kwargs):
-    return make_response(open('angular_flask/static/index.html').read())
-
-
-# routing for CRUD-style endpoints
-# passes routing onto the angular frontend if the requested resource exists
-from sqlalchemy.sql import exists
-
-crud_url_models = app.config['CRUD_URL_MODELS']
-
-
-@app.route('/<model_name>/')
-@app.route('/<model_name>/<item_id>')
-def rest_pages(model_name, item_id=None):
-    if model_name in crud_url_models:
-        model_class = crud_url_models[model_name]
-        if item_id is None or session.query(exists().where(
-                model_class.id == item_id)).scalar():
-            return make_response(open(
-                'angular_flask/templates/index.html').read())
-    abort(404)
+    return make_response(open('angular_flask/index.html').read())
 
 
 # special file handlers and error handlers
@@ -57,4 +38,4 @@ def favicon():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return render_template('angular_flask/404.html'), 404
