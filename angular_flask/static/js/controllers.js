@@ -114,11 +114,31 @@ function RateMovieController($scope, $routeParams, Post) {
 	});
 }
 
-function MovieRatingCtrl($scope) {
+function MovieRatingCtrl($scope, $http) {
 	$scope.customerName = "";
-	$scope.movie = "";
+	$scope.selectedMovie = "";
+	$scope.customers = [];
+	$scope.movies=[];
 
 
+	$http.get('/getCustomers').then(function(response) {
+        //First function handles success
+        $scope.customers = response.data;
+    }, function(response) {
+        //Second function handles error
+        alert("Unable to grab customers from database");
+    });
+
+	$http.get('/movies').then(function(response) {
+        //First function handles success
+        console.log(response.data);
+    	$scope.movies=response.data;
+
+    }, function(response) {
+        //Second function handles error
+        console.log(response);
+        alert("Unable to grab customers from database");
+    });
 }
 
 function SearchShowController($scope) {
