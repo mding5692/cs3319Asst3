@@ -40,7 +40,7 @@ def getCustomers():
 	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
 	cursor = cnx.cursor()
 
-	query = ("select * from Customers order by LastName")
+	query = ("select * from Customer order by LastName")
 	cursor.execute(query)
 	returnString = []
 	for i in cursor:
@@ -53,24 +53,22 @@ def getCustomers():
 	return str(json_result)
 
 
-@app.route("/movies", methods=['GET'])
-def movieList():
+@app.route("/getMovies", methods=['GET'])
+def getMovies():
+	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+	cursor = cnx.cursor()
 
-        cnx = mysql.connector.connect(user='root', database='MovieTheatre')
-        cursor = cnx.cursor()
+	query = ("select * from Movie order by MovieName")
+	cursor.execute(query)
+	movielist = []
+	for movie in cursor:
+		movielist.append(movie)
 
-        query = ("select * from Movie order by MovieName")
-        cursor.execute(query)
-
-        movies = cursor.fetchall()
-        cursor.close()
-        cnx.close()
-
-        json_result = json.dumps(returnString)
+	json_movies = json.dumps(movielist)
 	cursor.close()
 	cnx.close()
-	print(str(json_result))
-	return str(json_result)
+	print(str(json_movies))
+	return str(json_movies)
 
 
 @app.route('/getShowings', methods=['GET'])

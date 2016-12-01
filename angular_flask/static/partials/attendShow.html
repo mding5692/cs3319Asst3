@@ -6,7 +6,7 @@
 	</select>
 	<br>
 	<label>Pick the show:</label>
-	<select ng-model="showing" ng-options="item.Id as item.Name for item in showings">
+	<select ng-model="showing" ng-options="showing for showing in showings">
 		<option value="">Select Showing</option>
 	</select>
 	<br>

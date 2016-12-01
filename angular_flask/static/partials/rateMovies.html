@@ -1,12 +1,12 @@
 <h2>Select your name and show to rate the movie</h2>
 <form id="rateMovieForm" ng-controller="MovieRatingCtrl">
 	<label>Pick your name:</label>	
-	<select ng-model="customerName" ng-options="item.Id as item.Name for item in customers">
+	<select ng-model="customerName" ng-options="customer for customer in customers">
 		<option value="">Select Customer</option>
 	</select>
 	<br>
 	<label>Pick the show:</label>
-	<select ng-model="movie" ng-options="item.Id as item.Name for item in movies">
+	<select ng-model="selectedMovie" ng-options="movie for movie in movies">
 		<option value="">Select Movie</option>
 	</select>
 	<br>

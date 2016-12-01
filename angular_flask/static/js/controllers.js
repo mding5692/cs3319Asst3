@@ -110,21 +110,28 @@ function MoviesViewedCtrl($scope) {
 	$scope.searchedUser = "";
 }
 
-function RateMovieController($scope, $routeParams, Post) {
-	var postQuery = Post.get({ postId: $routeParams.postId }, function(post) {
-		$scope.post = post;
-	});
+function RateMovieController($scope) {
 }
 
-function MovieRatingCtrl($scope) {
+function MovieRatingCtrl($scope, $http) {
 	$scope.customerName = "";
-	$scope.movie = "";
+	$scope.selectedMovie = "";
 	$scope.movies=[];
+	$scope.customers = [];
 
-
-	$http.get('/movies').then(function(response) {
+	$http.get('/getCustomers').then(function(response) {
         //First function handles success
-    $scope.movies=response.data;
+        $scope.customers = cleanData(response.data,"customers");
+    }, function(response) {
+        //Second function handles error
+        console.log(response);
+        alert("Unable to grab customers from database");
+    });
+
+	$http.get('/getMovies').then(function(response) {
+        //First function handles success
+        console.log(response);
+    	$scope.movies=response.data;
 
     }, function(response) {
         //Second function handles error
