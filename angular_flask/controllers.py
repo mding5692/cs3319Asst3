@@ -29,6 +29,11 @@ def favicon():
 # SQL Queries handled below
 # -----------------------------
 
+
+
+
+
+
 # Gets customer firstname and lastname from MYSQL and sends it to Angularjs frontend
 @app.route('/getCustomers', methods=['GET'])
 def getCustomers():
@@ -46,6 +51,23 @@ def getCustomers():
 	cnx.close()
 	print(str(json_result))
 	return str(json_result)
+
+
+@app.route("/movie", methods=['GET'])
+def movieList():
+
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+
+    query = ("select * from Movie order by MovieName")
+    cursor.execute(query)
+
+    movies = cursor.fetchall()
+    cursor.close()
+    cnx.close()
+
+    return render_template('movie.html', movie=movie)
+
 
 @app.route('/getShowings', methods=['GET'])
 def getShowings():
