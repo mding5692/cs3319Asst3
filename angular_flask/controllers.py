@@ -26,7 +26,7 @@ session = api_manager.session
 @app.route('/attend')
 
 def basic_pages(**kwargs):
-    return make_response(open('angular_flask/templates/index.html').read())
+    return make_response(open('angular_flask/static/index.html').read())
 
 
 # routing for CRUD-style endpoints
