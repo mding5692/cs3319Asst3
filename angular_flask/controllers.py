@@ -6,17 +6,6 @@ from flask import send_file, make_response, abort
 
 from angular_flask import app
 
-# routing for API endpoints, generated from the models designated as API_MODELS
-from angular_flask.core import api_manager
-from angular_flask.models import *
-
-for model_name in app.config['API_MODELS']:
-    model_class = app.config['API_MODELS'][model_name]
-    api_manager.create_api(model_class, methods=['GET', 'POST'])
-
-session = api_manager.session
-
-
 # routing for basic pages (pass routing onto the Angular app)
 @app.route('/')
 @app.route('/profile')
@@ -37,6 +26,7 @@ def favicon():
 
 # SQL Queries handled below
 
+# 404 page
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('angular_flask/404.html'), 404
+    return render_template('404.html'), 404
