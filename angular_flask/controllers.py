@@ -27,8 +27,28 @@ def favicon():
                                'img/favicon.ico')
 
 # SQL Queries handled below
+# -----------------------------
+
+# Gets customer firstname and lastname from MYSQL and sends it to Angularjs frontend
 @app.route('/getCustomers', methods=['GET'])
 def getCustomers():
+	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+	cursor = cnx.cursor()
+
+	query = ("select FirstName, LastName from Customer")
+	cursor.execute(query)
+	returnString = []
+	for i in cursor:
+		returnString.append(i)
+
+	json_result = json.dumps(returnString)
+	cursor.close()
+	cnx.close()
+	print(str(json_result))
+	return str(json_result)
+
+@app.route('/getShowings', methods=['GET'])
+def getShowings():
 	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
 	cursor = cnx.cursor()
 

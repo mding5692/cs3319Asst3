@@ -1,5 +1,33 @@
 'use strict';
 
+/* Used methods */
+
+function cleanData(dataArr,dataType) {
+
+	var result = new Array();
+
+	if (dataType === "customers") {
+		for (var i = 0; i < dataArr.length; i++) {
+			result.push(dataArr[i].join(" "));
+		}
+	}
+
+	return result;
+}
+
+function formatDataAsSQLInput(data, dataType) {
+
+	var result = new Array();
+
+	if (dataType === "customers") {
+		result = data.split(" ");
+	}
+
+
+	return result;
+}
+
+
 /* Controllers */
 
 function IndexController($scope) {
@@ -23,23 +51,23 @@ function BuyTicketCtrl($scope, $http) {
 
 	$http.get('/getCustomers').then(function(response) {
         //First function handles success
-        console.log(response);
-        $scope.customers = response.data;
+        $scope.customers = cleanData(response.data,"customers");
     }, function(response) {
         //Second function handles error
         console.log(response);
         alert("Unable to grab customers from database");
     });
 
-	/*$http.get('/getShowings').then(function(response) {
+	$http.get('/getShowings').then(function(response) {
         //First function handles success
         $scope.showings = response.data;
     }, function(response) {
         //Second function handles error
-        alert("Unable to grab customers from database");
-    });*/
+        alert("Unable to grab showings from database");
+    });
 
 	$scope.buyTicket = function() {
+		// asks using the 
 		confirmPurchase();
 
 	};
@@ -50,6 +78,7 @@ function BuyTicketCtrl($scope, $http) {
 			showPurchaseSuccess();
 		} 
 	}
+
 
 	function showPurchaseSuccess() {
 		alert("Successfully bought ticket");
