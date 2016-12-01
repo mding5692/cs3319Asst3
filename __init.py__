@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    cnx = mysql.connector.connect(user='root', database='mydb')
+    cnx = mysql.connector.connect(user='root', database='Attend')
     cursor = cnx.cursor()
     query = ("SELECT * from Name")
     cursor.execute(query)
@@ -19,7 +19,7 @@ def helloName(name=None):
 
 @app.route('/submit', methods=["POST"])
 def submit():
-    cnx = mysql.connector.connect(user='root', database='mydb')
+    cnx = mysql.connector.connect(user='root', database='Attend')
     cursor = cnx.cursor()
     insert_stmt = (
         "INSERT INTO Name (firstname, lastname) "
@@ -37,7 +37,7 @@ def sqlInjection(name=None):
 
 @app.route('/submitSqlInjection', methods=["POST"])
 def sqlInjectionResult():
-    cnx = mysql.connector.connect(user='root', database='mydb')
+    cnx = mysql.connector.connect(user='root', database='Attend')
     cursor = cnx.cursor()
 
     firstName = request.form['firstname']
