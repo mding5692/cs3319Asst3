@@ -1,7 +1,7 @@
 <h2>Pick a show to attend</h2>
 <form id="rateMovieForm" ng-controller="BuyTicketCtrl">
 	<label>Pick your name:</label>	
-	<select ng-model="customerName" ng-options="item.Id as item.Name for item in customers">
+	<select ng-model="customerName" ng-options="customer for customer in customers">
 		<option value="">Select Customer</option>
 	</select>
 	<br>

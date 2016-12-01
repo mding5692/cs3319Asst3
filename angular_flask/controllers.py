@@ -1,4 +1,6 @@
 import os
+import json
+import mysql.connector
 
 from flask import Flask, request, Response
 from flask import render_template, url_for, redirect, send_from_directory
@@ -25,6 +27,22 @@ def favicon():
                                'img/favicon.ico')
 
 # SQL Queries handled below
+@app.route('/getCustomers', methods=['GET'])
+def getCustomers():
+	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+	cursor = cnx.cursor()
+
+	query = ("select FirstName, LastName from Customer")
+	cursor.execute(query)
+	returnString = []
+	for i in cursor:
+		returnString.append(i)
+
+	json_result = json.dumps(returnString)
+	cursor.close()
+	cnx.close()
+	print(str(json_result))
+	return str(json_result)
 
 # 404 page
 @app.errorhandler(404)
