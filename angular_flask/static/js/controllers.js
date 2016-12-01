@@ -16,12 +16,26 @@ function MoviesController($scope) {
 
 function BuyTicketCtrl($scope) {
 
+	$scope.customers = [];
+	$scope.showings = [];
 	$scope.customerName ="";
 	$scope.showing ="";
 
-	/*$http({
-		method: 'GET',
-	})*/
+	$http.get('/getCustomers').then(function(response) {
+        //First function handles success
+        $scope.customers = response.data;
+    }, function(response) {
+        //Second function handles error
+        alert("Unable to grab customers from database");
+    });
+
+	$http.get('/getShowings').then(function(response) {
+        //First function handles success
+        $scope.showings = response.data;
+    }, function(response) {
+        //Second function handles error
+        alert("Unable to grab customers from database");
+    });
 
 	$scope.buyTicket = function() {
 		confirmPurchase();
@@ -45,8 +59,16 @@ function BuyTicketCtrl($scope) {
 }
 
 function SearchUsrCtrl($scope) {
-	$scope.searchedUsr = "";
+	$scope.searchedCustomer = "";
+	$scope.customers = [];
 
+	$http.get('/getCustomers').then(function(response) {
+        //First function handles success
+        $scope.customers = response.data;
+    }, function(response) {
+        //Second function handles error
+        alert("Unable to grab customers from database");
+    });
 
 
 }

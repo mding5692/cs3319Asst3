@@ -1,9 +1,10 @@
 <h2>Select a user to see movies watched by that user</h2>
 <form id="moviesWatchedForm" ng-controller="MoviesViewedCtrl">
 
-	<label>Search for user:</label>
-	<select ng-model="searchedUser">
-
+	<label>Search for customer:</label>
+	<br>
+	<select ng-model="searchedUser" ng-options="item.Id as item.Name for item in customers">
+		<option value="">Select Customer</option>
 	</select>
 
 </form>

@@ -16,6 +16,7 @@ html {
 }
 select {
   width: 12vw;
+  color: #333;
 }
 
 h1,
