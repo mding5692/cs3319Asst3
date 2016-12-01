@@ -58,6 +58,8 @@ function BuyTicketCtrl($scope, $http) {
         alert("Unable to grab customers from database");
     });
 
+
+
 	$http.get('/getShowings').then(function(response) {
         //First function handles success
         $scope.showings = response.data;
@@ -117,6 +119,18 @@ function RateMovieController($scope, $routeParams, Post) {
 function MovieRatingCtrl($scope) {
 	$scope.customerName = "";
 	$scope.movie = "";
+	$scope.movies=[];
+
+
+	$http.get('/movies').then(function(response) {
+        //First function handles success
+    $scope.movies=response.data;
+
+    }, function(response) {
+        //Second function handles error
+        console.log(response);
+        alert("Unable to grab customers from database");
+    });
 
 
 }
