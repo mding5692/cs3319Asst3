@@ -53,20 +53,24 @@ def getCustomers():
 	return str(json_result)
 
 
-@app.route("/movie", methods=['GET'])
+@app.route("/movies", methods=['GET'])
 def movieList():
 
-    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
-    cursor = cnx.cursor()
+        cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+        cursor = cnx.cursor()
 
-    query = ("select * from Movie order by MovieName")
-    cursor.execute(query)
+        query = ("select * from Movie order by MovieName")
+        cursor.execute(query)
 
-    movies = cursor.fetchall()
-    cursor.close()
-    cnx.close()
+        movies = cursor.fetchall()
+        cursor.close()
+        cnx.close()
 
-    return render_template('movie.html', movie=movie)
+        json_result = json.dumps(returnString)
+	cursor.close()
+	cnx.close()
+	print(str(json_result))
+	return str(json_result)
 
 
 @app.route('/getShowings', methods=['GET'])
