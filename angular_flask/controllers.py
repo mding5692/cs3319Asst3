@@ -35,7 +35,7 @@ def getCustomers():
 	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
 	cursor = cnx.cursor()
 
-	query = ("select FirstName, LastName from Customer")
+	query = ("select * from Customers order by LastName")
 	cursor.execute(query)
 	returnString = []
 	for i in cursor:
