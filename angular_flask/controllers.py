@@ -87,6 +87,285 @@ def getShowings():
 	cnx.close()
 	print(str(json_result))
 	return str(json_result)
+	
+@app.route("/movie")
+def movieList():
+
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+
+    query = ("select * from Movie order by MovieName")
+    cursor.execute(query)
+
+    movies = cursor.fetchall()
+    cursor.close()
+    cnx.close()
+
+
+@app.route("/addMovies", methods=['POST'])
+def addMovies():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+    insert_stmt = (
+        "INSERT INTO Movie (idMovie, MovieName, MovieYear) "
+        "VALUES (%s, %s, %s)"
+    )
+
+    data = (request.form['idMovie'], request.form['MovieName'], request.form['MovieYear'])
+    cursor.execute(insert_stmt,data)
+    cnx.commit()
+    cnx.close()
+
+
+
+@app.route("/deletemovie", methods=['POST'])
+def deleteMovie():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+    insert_stmt = ("DELETE FROM Movie WHERE idMovie = %s")
+    
+
+    data = (request.form['idMovie'],)
+    cursor.execute(insert_stmt,data)
+    cnx.commit()
+    cnx.close()
+
+
+
+@app.route("/editmovie", methods=['GET','POST'])
+def editMovie():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+    insert_stmt = "update Movie set MovieName = %s, MovieYear = %s where idMovie = %s"
+
+    data = (request.form['MovieName'], request.form['MovieYear'], request.form['idMovie'])
+    cnx.commit()
+    cnx.close()
+    
+
+@app.route("/genres")
+def genreList():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+
+    query = ("select MovieName,Genre FROM Movie INNER JOIN Genre ON Movie.idMovie=Genre.idMovie order by Genre;")
+    cursor.execute(query)
+
+    genres = cursor.fetchall()
+    cursor.close()
+    cnx.close()
+
+
+
+
+@app.route("/addGenre", methods=['POST'])
+def addGenre():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+    insert_stmt = (
+        "INSERT INTO Genre (Genre, Movie_idMovie) "
+        "VALUES (%s, %s)"
+    )
+
+    data = (request.form['Genre'], request.form['Movie_idMovie'])
+    cursor.execute(insert_stmt,data)
+    cnx.commit()
+    cnx.close()
+
+
+@app.route("/deleteGenre", methods=['POST'])
+def deleteGenre():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+    insert_stmt = ("DELETE FROM Genre WHERE Genre = %s and Movie_idMovie = %s")
+    
+
+    data = (request.form['Genre'], request.form['Movie_idMovie'],)
+    cursor.execute(insert_stmt,data)
+    cnx.commit()
+    cnx.close()
+
+
+@app.route("/TheatreRoom")
+def TheatreRoomList():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+
+    query = ("SELECT * FROM TheatreRoom")
+    cursor.execute(query)
+
+    rooms = cursor.fetchall()’
+
+    cursor.close()
+    cnx.close()
+
+
+@app.route("/addTheatreRoom", methods=['POST'])
+def addTheatreRoom():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+    insert_stmt = (
+        "INSERT INTO TheatreRoom (RoomNumber, Capacity) "
+        "VALUES (%s, %s)"
+    )
+
+    data = (request.form['RoomNumber'], request.form['Capacity'])
+    cursor.execute(insert_stmt,data)
+    cnx.commit()
+    cnx.close()
+
+
+@app.route("/deleteTheatreRoom", methods=['POST'])
+def deleteTheatreRoom():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+    insert_stmt = ("DELETE FROM TheatreRoom WHERE RoomNumber = %s")
+    
+
+    data = (request.form['RoomNumber'],)
+    cursor.execute(insert_stmt,data)
+    cnx.commit()
+    cnx.close()
+
+
+@app.route("/modifyTheatreRoom", methods=['GET','POST'])
+def modifyTheatreRoom():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+    insert_stmt = "update Rooms set Capacity = %s where RoomNumber = %s"
+    data = (request.form['Capacity'], request.form['RoomNumber'])
+    cursor.execute(insert_stmt,data)
+    cnx.commit()
+    cnx.close()
+
+
+
+@app.route("/showings")
+def showingList():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+
+    query = ("SELECT * FROM Showing ORDER BY ShowingDateTime")
+    cursor.execute(query)
+
+    showings = cursor.fetchall()
+    cursor.close()
+    cnx.close()
+
+
+
+
+
+@app.route("/addShowing", methods=['POST'])
+def addShowing():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+    insert_stmt = (
+        "INSERT INTO Showing(idshowing, ShowingDateTime, Movie_idMovie, TheatreRoom_RoomNumber, TicketPrice) "
+        "VALUES (%d, %s, %d, %d, %d)"
+    )
+
+    data = (request.form['idshowing'], request.form['ShowingDateTime'], request.form['Movie_idMovie'], request.form['TheatreRoom_RoomNumber'], request.form['TicketPrice'])
+    cursor.execute(insert_stmt,data)
+    cnx.commit()
+    cnx.close()
+
+
+@app.route("/deleteShowing", methods=['POST'])
+def deleteShowing():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+    insert_stmt = "delete from Showing where idshowing = %d and Movie_idMovie = %d and TheatreRoom_RoomNumber = %d"    
+
+    data = (request.form['idshowing'], request.form['Movie_idMovie'], request.form['TheatreRoom_RoomNumber'])
+    cursor.execute(insert_stmt,data)
+    cnx.commit()
+    cnx.close()
+
+
+
+
+@app.route("/modifyShowing", methods=['GET','POST'])
+def modifyShowing():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+    insert_stmt = "update Showing set ShowingDateTime = %s, TicketPrice = %s where (Movie_idMovie = %s and TheatreRoom_RoomNumber = %s and idshowing = %s)"
+    data = (request.form['ShowingDateTime'], request.form['TicketPrice'], request.form['Movie_idMovie'], request.form['TheatreRoom_RoomNumber'], request.form['idshowing'])
+    cursor.execute(insert_stmt,data)
+    cnx.commit()
+    cnx.close()
+
+
+@app.route("/customers")
+def customerList():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+
+    query = ("SELECT * FROM Customer order by LastName ")
+    cursor.execute(query)
+
+    customers = cursor.fetchall()
+    cursor.close()
+    cnx.close()
+
+
+
+
+@app.route("/addCustomer", methods=['POST'])
+def addCustomer():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+    insert_stmt = (
+        "INSERT INTO Customer (idCustomer,FirstName, LastName, EmailAddress, Sex) "
+        "VALUES (%d, %s, %s, %s, %s)"
+    )
+
+    data = (request.form['idCustomer'], request.form['FirstName'], request.form['LastName'], request.form['EmailAddress'], request.form['Sex'])
+    cursor.execute(insert_stmt,data)
+    cnx.commit()
+    cnx.close()
+
+
+
+@app.route("/deletecustomer", methods=['POST'])
+def deletecustomer():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+    insert_stmt = ("DELETE FROM Customer WHERE idCustomer = %s")
+    
+
+    data = (request.form['idCustomer'],)
+    cursor.execute(insert_stmt,data)
+    cnx.commit()
+    cnx.close()
+
+
+
+
+@app.route("/modifycustomer", methods=['GET','POST'])
+def modifyShowing():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+    insert_stmt = "update Customer set FirstName = %s, LastName = %s, Sex = %s, EmailAddress = %s where idCustomer = %s"
+    data = (request.form['FirstName'], request.form['LastName'], request.form['Sex'], request.form['EmailAddress'], request.form['CustomerID'])
+    cursor.execute(insert_stmt,data)
+    cnx.commit()
+    cnx.close()
+
+
+@app.route("/attend")
+def attendLoad():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+
+    query = ("select * from Attend")
+    query = ("select Customer.FirstName, Customer.LastName, Showing.idShowing, Showing.ShowingDateTime, Movie.idMovie, Movie.MovieName, Attend.Rating from Customer join Attend on Customer.idCustomer = Attend.Customer_idCustomer join Showing on Showing.idShowing = Attend.Showing_idShowing join Movie on Movie.idMovie = Showing.Movie_idMovie order by Attend.Rating")
+    cursor.execute(query)
+
+    attends = cursor.fetchall()
+    cursor.close()
+    cnx.close()
+
 
 # 404 page
 @app.errorhandler(404)
