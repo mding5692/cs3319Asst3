@@ -194,7 +194,7 @@ def TheatreRoomList():
     query = ("SELECT * FROM TheatreRoom")
     cursor.execute(query)
 
-    rooms = cursor.fetchall()’
+    rooms = cursor.fetchall()
 
     cursor.close()
     cnx.close()
