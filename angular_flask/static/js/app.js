@@ -27,7 +27,11 @@ angular.module('MovieFlask', ['angularFlaskServices'])
 		}).when('/attend', {
 			templateUrl: 'static/partials/attendShow.html',
 			controller: AttendController
-		}).otherwise({
+		}).when('/staff', {
+			templateUrl: 'static/partials/staff.html',
+			controller: StaffController
+		})
+		.otherwise({
 			redirectTo: '/'
 		});
 

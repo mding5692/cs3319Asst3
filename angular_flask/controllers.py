@@ -15,6 +15,7 @@ from angular_flask import app
 @app.route('/movies')
 @app.route('/rate')
 @app.route('/attend')
+@app.route('/staff')
 
 def basic_pages(**kwargs):
     return make_response(open('angular_flask/index.html').read())

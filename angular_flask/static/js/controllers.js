@@ -30,6 +30,10 @@ function formatDataAsSQLInput(data, dataType) {
 
 /* Controllers */
 
+function StaffController() {
+
+}
+
 function IndexController($scope) {
 	
 }
@@ -103,6 +107,24 @@ function SearchUsrCtrl($scope) {
         alert("Unable to grab customers from database");
     });
 
+
+}
+
+function StaffFormCtrl($scope, $http) {
+	// Adds Movie
+	$scope.addMovieNo = 0;
+	$scope.addMovieName = "";
+	$scope.addMovieYr = 0;
+	// Deletes movie
+	$scope.delMovieNo = 0;
+	$scope.delMovieName = "";
+	$scope.delMovieYr = 0;
+	// Modifies Movie
+	$scope.modMovieNo = 0;
+	$scope.modMovieName = "";
+	$scope.modMovieYr = 0;
+	// Lists All Movies
+	$scope.allMovies = [];
 
 }
 

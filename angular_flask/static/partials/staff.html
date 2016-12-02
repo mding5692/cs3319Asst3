@@ -1,0 +1,77 @@
+<form id="staff-form" ng-controller="StaffFormCtrl">
+	<div id="hideAfterDone" ng-hide="hideRest">
+		<h3 class=>Movies</h3>
+		<button class="btn btn-default" ng-click="showAddMovie = true; hideRest = true;">Add Movies</button>
+		<button class="btn btn-default" ng-click="showDelMovie = true; hideRest = true;">Delete Movies</button>
+		<button class="btn btn-default" ng-click="showModMovie = true; hideRest = true;">Modify Movies</button>
+		<button class="btn btn-default" ng-click="showListMovie = true; hideRest = true;">See all movies</button>
+		<h3>Genres</h3>
+		<button class="btn btn-default">Add Genre to Movie</button>
+		<button class="btn btn-default">Delete Genre from Movie</button>
+		<button class="btn btn-default">List all Genres</button>
+		<h3>Rooms</h3>
+		<button class="btn btn-default">Add Rooms</button>
+		<button class="btn btn-default">Delete Rooms</button>
+		<button class="btn btn-default">Modify Rooms</button>
+		<button class="btn btn-default">List all Rooms</button>
+		<h3>Showing</h3>
+		<button class="btn btn-default">Add Showings</button>
+		<button class="btn btn-default">Delete Showings</button>
+		<button class="btn btn-default">Modify Showings</button>
+		<button class="btn btn-default">List all Showings</button>
+		<h3>Customers</h3>
+		<button class="btn btn-default">Add Customers</button>
+		<button class="btn btn-default">Delete Customers</button>
+		<button class="btn btn-default">Modify Customers</button>
+		<button class="btn btn-default">List all Customers</button>
+		<h3>Attend</h3>
+		<button class="btn btn-default">List attending Customers</button>
+		<button class="btn btn-default">List attended Showings</button>
+		<button class="btn btn-default">List attended Movies</button>
+		<button class="btn btn-default">List rated attendances</button>
+	</div>
+	<!-- Adds movie -->
+	<div id="addMoviePg" ng-show="showAddMovie">
+		<h3>Adding Movie</h3>
+		<p> You need a unique movie ID, movie name and movie year</p>
+		<span>Movie ID:</span>
+		<input type="number" ng-model="addMovieNo" />
+		<span>Movie Name:</span>
+		<input type="text" ng-model="addMovieName" />
+		<span>Movie Year:</span>
+		<input type="number" ng-model="addMovieYr" />
+		<button class="btn btn-default" ng-click="addMovie()">Add Movie</button>
+	</div>
+	<!--Deletes movie -->
+	<div id="delMoviePg" ng-show="showDelMovie">
+		<h3>Delete Movie</h3>
+		<p> You need a unique movie ID or movie name and movie year to delete</p>
+		<span>Movie ID:</span>
+		<input type="number" ng-model="delMovieNo" />
+		<span>Movie Name:</span>
+		<input type="text" ng-model="delMovieName" />
+		<span>Movie Year:</span>
+		<input type="number" ng-model="delMovieYr" />
+		<button class="btn btn-default" ng-click="delMovie()">Add Movie</button>
+	</div>
+	<!--Modifies movie -->
+	<div id="modMoviePg" ng-show="showModMovie">
+		<h3>Modifiy Movie</h3>
+		<p> You need a unique movie ID or movie name and movie year to modify</p>
+		<span>Movie ID:</span>
+		<input type="number" ng-model="modMovieNo" />
+		<span>Movie Name:</span>
+		<input type="text" ng-model="modMovieName" />
+		<span>Movie Year:</span>
+		<input type="number" ng-model="modMovieYr" />
+		<button class="btn btn-default" ng-click="delMovie()">Add Movie</button>
+	</div>
+	<!--Lists all movies -->
+	<div id="modMoviePg" ng-show="showListMovie">
+		<h3>List Movies</h3>
+		<button class="btn btn-default" ng-click="getMovies(); showMovieList=true">Press here</button>
+		<div ng-show="showMovieList" ng-repeat="movie in allMovies">
+  			<span>ID: {{movie.id}},</span> <span>Name: {{movie.name}},</span> <span>Year: {{movie.yr}}</span>
+		</div>
+	</div>
+</form>
