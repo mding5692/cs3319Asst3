@@ -36,57 +36,57 @@ def favicon():
 
 # Gets customer firstname and lastname from MYSQL and sends it to Angularjs frontend
 @app.route('/getCustomers', methods=['GET'])
-def getCustomers():
-	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
-	cursor = cnx.cursor()
+def. getCustomers():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
 
-	query = ("select * from Customer order by LastName")
-	cursor.execute(query)
-	returnString = []
-	for i in cursor:
-		returnString.append(i)
+    query = ("select * from Customer order by LastName")
+    cursor.execute(query)
+    returnString = []
+    for i in cursor:
+	returnString.append(i)
 
-	json_result = json.dumps(returnString)
-	cursor.close()
-	cnx.close()
-	print(str(json_result))
-	return str(json_result)
+    json_result = json.dumps(returnString)
+    cursor.close()
+    cnx.close()
+    print(str(json_result))
+    return str(json_result)
 
 
 @app.route("/getMovies", methods=['GET'])
 def getMovies():
-	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
-	cursor = cnx.cursor()
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
 
-	query = ("select * from Movie order by MovieName")
-	cursor.execute(query)
-	movielist = []
-	for movie in cursor:
-		movielist.append(movie)
+    query = ("select * from Movie order by MovieName")
+    cursor.execute(query)
+    movielist = []
+    for movie in cursor:
+	movielist.append(movie)
 
-	json_movies = json.dumps(movielist)
-	cursor.close()
-	cnx.close()
-	print(str(json_movies))
-	return str(json_movies)
+    json_movies = json.dumps(movielist)
+    cursor.close()
+    cnx.close()
+    print(str(json_movies))
+    return str(json_movies)
 
 
 @app.route('/getShowings', methods=['GET'])
 def getShowings():
-	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
-	cursor = cnx.cursor()
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
 
-	query = ("select FirstName, LastName from Customer")
-	cursor.execute(query)
-	returnString = []
-	for i in cursor:
-		returnString.append(i)
+    query = ("select FirstName, LastName from Customer")
+    cursor.execute(query)
+    returnString = []
+    for i in cursor:
+	returnString.append(i)
 
-	json_result = json.dumps(returnString)
-	cursor.close()
-	cnx.close()
-	print(str(json_result))
-	return str(json_result)
+    json_result = json.dumps(returnString)
+    cursor.close()
+    cnx.close()
+    print(str(json_result))
+    return str(json_result)
 	
 @app.route("/movie")
 def movieList():
