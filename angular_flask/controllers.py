@@ -36,7 +36,7 @@ def favicon():
 
 # Gets customer firstname and lastname from MYSQL and sends it to Angularjs frontend
 @app.route('/getCustomers', methods=['GET'])
-def. getCustomers():
+def getCustomers():
     cnx = mysql.connector.connect(user='root', database='MovieTheatre')
     cursor = cnx.cursor()
 
