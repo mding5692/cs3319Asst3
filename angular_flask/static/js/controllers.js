@@ -125,6 +125,124 @@ function StaffFormCtrl($scope, $http) {
 	$scope.modMovieYr = 0;
 	// Lists All Movies
 	$scope.allMovies = [];
+	// Add genre for movie
+	$scope.addMovieNoForGenre = 0;
+	$scope.addMovieNameForGenre = "";
+	$scope.addMovieGenre = "";
+	// Del genre from movie
+	$scope.delMovieNoForGenre = 0;
+	$scope.delMovieNameForGenre = "";
+	$scope.delMovieGenre = "";
+	// List genres
+	$scope.allGenres = [];
+	// Add room
+	$scope.addRmNo = 0;
+	$scope.addRmCap = 0;
+	// Del room
+	$scope.delRmNo = 0;
+	// Edit room
+	$scope.modRmNo = 0;
+	$scope.modRmCap = 0;
+	// List rooms
+	$scope.allRms = [];
+	// Add Showing
+	$scope.addShowingNo = 0;
+	$scope.addShowingMovieNo=0;
+	$scope.addShowingDate = 0;
+	$scope.addShowingRmNo = 0;
+	$scope.addShowingPrice = 0;
+	// Del Showing
+	$scope.delShowingNo = 0;
+	$scope.delShowingMovieNo=0;
+	$scope.delShowingDate = 0;
+	$scope.delShowingRmNo = 0;
+	// Edit Showing
+	$scope.modShowingNo = 0;
+	$scope.modShowingMovieNo=0;
+	$scope.modShowingRmNo = 0;
+	// list showings
+	$scope.allShowings = [];
+	// Add cust
+	$scope.addCustNo = 0;
+	$scope.addCustSex = "";
+	$scope.addCustFName = "";
+	$scope.addCustLName = "";
+	$scope.addCustEmail = "";
+	// Del cust
+	$scope.delCustNo = 0;
+	// Edit cust
+	$scope.modCustNo = 0;
+	$scope.modCustSex = "";
+	$scope.modCustFName = "";
+	$scope.modCustLName = "";
+	$scope.modCustEmail = "";
+	// List cust
+	$scope.allCustomers = [];
+	// Attending 
+	$scope.allAtt = [];
+
+	// Gets Movie function
+	$scope.getMovies = function() {
+		$http.get('/movie').then(function(response) {
+        //First function handles success
+        	$scope.allMovies = response.data;
+    	}, function(response) {
+        //Second function handles error
+        	console.log(response);
+        	alert("Unable to grab movies from database");
+    	});
+	}
+
+	// Gets all rooms
+	$scope.getRms = function() {
+		$http.get('/rooms').then(function(response) {
+        //First function handles success
+        	$scope.allRms = response.data;
+    	}, function(response) {
+        //Second function handles error
+        	console.log(response);
+        	alert("Unable to grab rooms from database");
+    	});
+	}
+
+	// Gets all shows
+	$scope.getShowings = function() {
+		$http.get('/showings').then(function(response) {
+        //First function handles success
+        	console.log(response.data)
+        	$scope.allShowings = response.data;
+    	}, function(response) {
+        //Second function handles error
+        	console.log(response);
+        	alert("Unable to grab showings from database");
+    	});
+	}
+
+		// Gets all shows
+	$scope.getCustList = function() {
+		$http.get('/customers').then(function(response) {
+        //First function handles success
+        	console.log(response.data)
+        	$scope.allCustomers = response.data;
+    	}, function(response) {
+        //Second function handles error
+        	console.log(response);
+        	alert("Unable to grab showings from database");
+    	});
+	}
+			// Gets all shows
+	$scope.getGenres = function() {
+		$http.get('/genres').then(function(response) {
+        //First function handles success
+        	console.log(response.data)
+        	$scope.allGenres = response.data;
+    	}, function(response) {
+        //Second function handles error
+        	console.log(response);
+        	alert("Unable to grab genres from database");
+    	});
+	}
+
 
 }
 

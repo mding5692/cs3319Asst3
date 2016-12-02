@@ -12,7 +12,7 @@ angular.module('MovieFlask', ['angularFlaskServices'])
 			templateUrl: 'static/partials/userProfile.html',
 			controller: UserProfileController
 		})
-		.when('/movies', {
+		.when('/moviesWatched', {
 			templateUrl: 'static/partials/moviesWatched.html',
 			controller: MoviesController
 		})

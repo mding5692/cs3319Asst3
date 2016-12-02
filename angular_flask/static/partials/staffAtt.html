@@ -71,7 +71,7 @@
 		<h3>List Movies</h3>
 		<button class="btn btn-default" ng-click="getMovies(); showMovieList=true">Press here</button>
 		<div ng-show="showMovieList" ng-repeat="movie in allMovies">
-  			<span>ID: {{movie.0}},</span> <span>Name: {{movie.1}},</span> <span>Year: {{movie.2}}</span>
+  			<span>ID: {{movie.id}},</span> <span>Name: {{movie.name}},</span> <span>Year: {{movie.yr}}</span>
 		</div>
 	</div>
 	<!-- Adds genre from movie -->
@@ -103,7 +103,7 @@
 		<h3>List Movies</h3>
 		<button class="btn btn-default" ng-click="getGenres(); showGenreList=true">Press here</button>
 		<div ng-show="showGenreList" ng-repeat="genre in allGenres">
-  			<span>Genre: {{genre.1}},</span> <span>Movie Name: {{genre.0}}</span>
+  			<span>Genre: {{genre.genre}},</span> <span>Name: {{genre.movie}}</span>
 		</div>
 	</div>
 	<!--Adds room -->
@@ -139,7 +139,7 @@
 		<h3>List rooms</h3>
 		<button class="btn btn-default" ng-click="getRms(); showRmList=true">Press here</button>
 		<div ng-show="showRmList" ng-repeat="rm in allRms">
-			<span>Room number: {{rm.0}},</span> <span>Capacity: {{rm.1}}</span>
+  			<span>Room number: {{rm.no}},</span> <span>Capacity: {{rm.cap}}</span>
 		</div>
 	</div>
 	<!-- Adds showing -->
@@ -186,10 +186,10 @@
 	</div>
 	<!--Lists all movies -->
 	<div id="allShowingPg" ng-show="showListShowing">
-		<h3>List Shows</h3>
+		<h3>List Movies</h3>
 		<button class="btn btn-default" ng-click="getShowings(); showShowingList=true">Press here</button>
 		<div ng-show="showShowingList" ng-repeat="showing in allShowings">
-  			<span>ID: {{showing.0}},</span> <span>Movie ID: {{showing.1}},</span> <span>Date: {{showing.4}}</span> <span>Room num: {{showing.2}},</span> <span>Price: {{showing.3}}</span>
+  			<span>ID: {{showing.id}},</span> <span>Movie ID: {{showing.movieid}},</span> <span>Date: {{showing.date}}</span> <span>Room num: {{showing.room}},</span> <span>Price: {{showing.price}}</span>
 		</div>
 	</div>
 	<!-- Adds showing -->
@@ -237,33 +237,33 @@
 	<!--Lists all movies -->
 	<div id="allCustPg" ng-show="showListCust">
 		<h3>List Customers</h3>
-		<button class="btn btn-default" ng-click="getCustList(); showCustList=true">Press here</button>
+		<button class="btn btn-default" ng-click="getCustomers(); showCustList=true">Press here</button>
 		<div ng-show="showCustList" ng-repeat="cust in allCustomers">
-  			<span>ID: {{cust.0}},</span> <span>First name: {{cust.1}},</span> <span>Last Name: {{cust.2}}</span> <span>Sex: {{cust.4}},</span> <span>Email: {{cust.3}}</span>
+  			<span>ID: {{cust.id}},</span> <span>First name: {{cust.fName}},</span> <span>Last Name: {{cust.lName}}</span> <span>Sex: {{cust.sex}},</span> <span>Email: {{cust.email}}</span>
 		</div>
 	</div>
 		<!--Lists all attend and cust -->
 	<div id="custAttendPg" ng-show="showListAttendCust">
 		<h3>List Attending Customers</h3>
-		<button class="btn btn-default" ng-click="getAttend(); showAttCustList=true">Press here</button>
-		<div ng-show="showAttCustList" ng-repeat="att in allAtt">
-  			<span>Customer ID: {{att.custId}},</span> <span>First name: {{att.fName}},</span> <span>Last Name: {{att.lName}}</span> <span>Showing ID: {{att.showing}}</span><span>Rating: {{att.rating}}</span>
+		<button class="btn btn-default" ng-click="getAttCust(); showAttCustList=true">Press here</button>
+		<div ng-show="showAttCustList" ng-repeat="attCust in allAttCustomers">
+  			<span>Customer ID: {{attCust.id}},</span> <span>First name: {{attCust.fName}},</span> <span>Last Name: {{attCust.lName}}</span> <span>Showing ID: {{attCust.showing}}</span><span>Rating: {{attCust.rating}}</span>
 		</div>
 	</div>
 		<!--Lists all movies -->
 	<div id="showAttendPg" ng-show="showListAttendShow">
 		<h3>List Showing and Customers</h3>
-		<button class="btn btn-default" ng-click="getAttend(); showAttShowList=true">Press here</button>
-		<div ng-show="showAttShowList" ng-repeat="att in allAtt">
-  			<span>Customer ID: {{att.custId}},</span> <span>Showing date: {{att.date}}, <span>Showing ID: {{att.showing}}</span><span>Rating: {{att.rating}}</span> <span>Room: {{att.rm}}</span><span>Price: {{att.price}}</span>
+		<button class="btn btn-default" ng-click="getAttShow(); showAttShowList=true">Press here</button>
+		<div ng-show="showAttShowList" ng-repeat="attShow in allAttShows">
+  			<span>Customer ID: {{attShow.custId}},</span> <span>Showing date: {{attShow.date}}, <span>Showing ID: {{attShow.id}}</span><span>Rating: {{attShow.rating}}</span> <span>Room: {{attShow.rm}}</span><span>Price: {{attShow.price}}</span>
 		</div>
 	</div>
 		<!--Lists all movies -->
 	<div id="movieAttendPg" ng-show="showListAttendMovie">
 		<h3>List Movies Attended</h3>
-		<button class="btn btn-default" ng-click="getAttend(); showAttMovieList=true">Press here</button>
-		<div ng-show="showAttMovieList" ng-repeat="att in allAtt">
-  			<span>Customer ID: {{att.custId}},</span> <span>Movie ID: {{att.mID}}</span> <span>Showing ID: {{att.showing}}</span><span>Rating: {{att.rating}}</span> <span>Movie: {{att.movie}}</span><span>Movie Yr: {{att.yr}}</span>
+		<button class="btn btn-default" ng-click="getAttMovies(); showAttMovieList=true">Press here</button>
+		<div ng-show="showAttMovieList" ng-repeat="attMovie in allAttMovies">
+  			<span>Customer ID: {{attMovie.custId}},</span> <span>Movie ID: {{attMovie.mID}}</span> <span>Showing ID: {{attMovie.showing}}</span><span>Rating: {{attMovie.rating}}</span> <span>Movie: {{attMovie.movie}}</span><span>Movie Yr: {{attMovie.yr}}</span>
 		</div>
 	</div>
 		<!--Lists all movies -->
