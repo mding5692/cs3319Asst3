@@ -86,7 +86,7 @@ def getShowings():
 	json_result = json.dumps(returnString)
 	cursor.close()
 	cnx.close()
-	print(str(json_result))
+	#print(str(json_result))
 	return str(json_result)
 	
 @app.route("/movie")
@@ -114,11 +114,13 @@ def addMovies():
 		"VALUES (%s, %s, %s)"
 	)
 
-	data = (request.form['idMovie'], request.form['MovieName'], request.form['MovieYear'])
+	post = request.get_json()
+	data = (str(post['idMovie']), post['MovieName'], str(post['MovieYear']))
+	print(insert_stmt,data)
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()
-
+	return data
 
 
 @app.route("/deletemovie", methods=['POST'])
@@ -127,11 +129,12 @@ def deleteMovie():
 	cursor = cnx.cursor()
 	insert_stmt = ("DELETE FROM Movie WHERE idMovie = %s")
 	
-
-	data = (request.form['idMovie'],)
+	post = request.get_json()
+	data = (str(post['idMovie']),)
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()
+	return data
 
 
 

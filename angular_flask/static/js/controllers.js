@@ -117,8 +117,6 @@ function StaffFormCtrl($scope, $http) {
 	$scope.addMovieYr = 0;
 	// Deletes movie
 	$scope.delMovieNo = 0;
-	$scope.delMovieName = "";
-	$scope.delMovieYr = 0;
 	// Modifies Movie
 	$scope.modMovieNo = 0;
 	$scope.modMovieName = "";
@@ -191,6 +189,38 @@ function StaffFormCtrl($scope, $http) {
         	console.log(response);
         	alert("Unable to grab movies from database");
     	});
+	}
+
+	$scope.addMovie = function() {
+		var movieData = {
+			idMovie : $scope.addMovieNo,
+			MovieName : $scope.addMovieName,
+			MovieYear : $scope.addMovieYr
+		};
+
+		var data = JSON.stringify(movieData)
+
+		$http.post('/addMovies', data).then(function(data) {
+			console.log(data);
+			alert("Data is sent");
+		}, function(data) {
+			console.log(data)
+		});
+	}
+
+	$scope.delMovie = function() {
+		var movieData = {
+			idMovie: $scope.delMovieNo
+		}
+
+		var data = JSON.stringify(movieData)
+
+		$http.post('/deletemovie', data).then(function(data) {
+			console.log(data);
+			alert("Data is sent");
+		}, function(data) {
+			console.log(data)
+		});
 	}
 
 	// Gets all rooms
