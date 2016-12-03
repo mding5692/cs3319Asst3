@@ -115,7 +115,7 @@ def addMovies():
 	)
 
 	post = request.get_json()
-	data = (str(post['idMovie']), post['MovieName'], str(post['MovieYear']))
+	data = (str(post['idMovie']), post['MovieName'], str(post['MovieYear']),)
 	print(insert_stmt,data)
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
@@ -144,10 +144,12 @@ def editMovie():
 	cursor = cnx.cursor()
 	insert_stmt = "update Movie set MovieName = %s, MovieYear = %s where idMovie = %s"
 
-	data = (request.form['MovieName'], request.form['MovieYear'], request.form['idMovie'])
+	post = request.get_json()
+	data = (post['MovieName'], str(post['MovieYear']), str(post['idMovie']))
+	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()
-	
+	return data
 
 @app.route("/genres")
 def genreList():

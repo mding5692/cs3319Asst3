@@ -208,6 +208,23 @@ function StaffFormCtrl($scope, $http) {
 		});
 	}
 
+	$scope.editMovie = function() {
+		var movieData = {
+			idMovie : $scope.modMovieNo,
+			MovieName : $scope.modMovieName,
+			MovieYear : $scope.modMovieYr
+		};
+
+		var data = JSON.stringify(movieData)
+
+		$http.post('/editmovie', data).then(function(data) {
+			console.log(data);
+			alert("Data is sent");
+		}, function(data) {
+			console.log(data)
+		});
+	}
+
 	$scope.delMovie = function() {
 		var movieData = {
 			idMovie: $scope.delMovieNo
