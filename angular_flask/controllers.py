@@ -379,6 +379,26 @@ def attendLoad():
 	cnx.close()
 
 
+
+@app.route("/sqlinject")
+def sqlInjection():
+    return render_template('sqlinject.html')
+
+@app.route("/showsqlinjection", methods=['GET', 'POST'])
+def showSqlInjection():
+    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+    cursor = cnx.cursor()
+
+    data = (request.form['Customer'],)
+    cursor.execute("select * from Customer where idCustomer='%s'" % data)
+
+    movies = cursor.fetchall()
+    #cnx.commit()
+    cnx.close()
+
+    return render_template('showsqlinject.html',Customer=Customer)
+
+
 # 404 page
 @app.errorhandler(404)
 def page_not_found(e):
