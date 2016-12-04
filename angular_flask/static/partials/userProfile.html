@@ -2,7 +2,7 @@
 <form id="searchUserForm" ng-controller="SearchUsrCtrl">
 
 	<label>Search for user:</label>
-	<select ng-model="searchedUsr" ng-options="customer for customer in customers">
+	<select ng-model="searchedUsr" ng-options="customer.1 + ' ' + customer.2 for customer in customers">
 		<option value="">Select Customer</option>
 	</select>
 

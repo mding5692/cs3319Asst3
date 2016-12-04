@@ -1,12 +1,12 @@
 <h2>Pick a show to attend</h2>
 <form id="rateMovieForm" ng-controller="BuyTicketCtrl">
 	<label>Pick your name:</label>	
-	<select ng-model="customerName" ng-options="customer for customer in customers">
+	<select ng-model="customerName" ng-options="customer.1 + ' ' + customer.2 + ' customer ID: ' + customer.0 for customer in customers">
 		<option value="">Select Customer</option>
 	</select>
 	<br>
 	<label>Pick the show:</label>
-	<select ng-model="showing" ng-options="showing for showing in showings">
+	<select ng-model="showing" ng-options="showing.0 + ' ' + showing.4 for showing in showings">
 		<option value="">Select Showing</option>
 	</select>
 	<br>

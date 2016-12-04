@@ -307,6 +307,22 @@ def customerList():
 	cnx.close()
 	return json_result
 
+@app.route("/attendShow", methods=['POST'])
+def attendShow():
+	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+	cursor = cnx.cursor()
+	insert_stmt = (
+		"INSERT INTO Attend (Customer_idCustomer,Showing_idShowing) "
+		"VALUES (%s, %s)"
+	)
+
+	post = request.get_json()
+	data = (str(post['custid']), str(post['showing']))
+	print(data)
+	cursor.execute(insert_stmt,data)
+	cnx.commit()
+	cnx.close()
+	return data
 
 
 @app.route("/addCustomer", methods=['POST'])
@@ -372,7 +388,7 @@ def changeRating():
 	cursor = cnx.cursor()
 	insert_stmt = "update Attend set Rating = %s where Customer_idCustomer = %s and Showing_idShowing = %s"
 	post = request.get_json()
-	data = (str(post['rating']), str(post['custID']), str(post['showing']))
+	data = (str(post['rating']), str(post['custid']), str(post['showing']))
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()

@@ -3,7 +3,7 @@
 
 	<label>Search for customer:</label>
 	<br>
-	<select ng-model="searchedUser" ng-change="showCustMovies();" ng-options="customer.1 for customer in customers">
+	<select ng-model="searchedUser" ng-change="showCustMovies();" ng-options="customer.1 + ' ' + customer.2 for customer in customers">
 		<option value="">Select Customer</option>
 	</select>
 	<br>

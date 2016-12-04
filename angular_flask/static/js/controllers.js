@@ -55,7 +55,7 @@ function BuyTicketCtrl($scope, $http) {
 
 	$http.get('/getCustomers').then(function(response) {
         //First function handles success
-        $scope.customers = cleanData(response.data,"customers");
+        $scope.customers = response.data;
     }, function(response) {
         //Second function handles error
         console.log(response);
@@ -64,7 +64,7 @@ function BuyTicketCtrl($scope, $http) {
 
 
 
-	$http.get('/getShowings').then(function(response) {
+	$http.get('/showings').then(function(response) {
         //First function handles success
         $scope.showings = response.data;
     }, function(response) {
@@ -73,18 +73,26 @@ function BuyTicketCtrl($scope, $http) {
     });
 
 	$scope.buyTicket = function() {
-		// asks using the 
-		confirmPurchase();
-
-	};
-
-	function confirmPurchase() {
 		var continuePurchase = confirm("You sure you want to buy this?");
 		if (continuePurchase) {
-			showPurchaseSuccess();
-		} 
-	}
 
+			var data = {
+				custid : $scope.customerName[0],
+				showing : $scope.showing[0]
+			}
+
+			$http.post('/attendShow', data).then(function(response) {
+				console.log(response);
+			}, function(response) {
+				console.log(response);
+			});
+
+			showPurchaseSuccess();
+		} else {
+			
+		}
+
+	};
 
 	function showPurchaseSuccess() {
 		alert("Successfully bought ticket");
@@ -575,7 +583,7 @@ function MovieRatingCtrl($scope, $http) {
 
 			var data = {
 				rating: $scope.newRating,
-				custID : custID,
+				custid : custID,
 				showing : showing
 			};
 
