@@ -306,6 +306,7 @@ def deleteShowing():
 def modifyShow():
 	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
 	cursor = cnx.cursor()
+	post = request.get_json()
 	insert_stmt = "update Showing set ShowingDateTime = %s, TicketPrice = %s where (Movie_idMovie = %s and TheatreRoom_RoomNumber = %s and idshowing = %s)"
 	data = (str(post['ShowingDateTime']), str(post['TicketPrice']), str(post['Movie_idMovie']), str(post['TheatreRoom_RoomNumber']), str(post['idshowing']))
 	cursor.execute(insert_stmt,data)
@@ -338,6 +339,7 @@ def addCustomer():
 		"VALUES (%s, %s, %s, %s, %s)"
 	)
 
+	post = request.get_json()
 	data = (str(post['idCustomer']), post['FirstName'], post['LastName'], post['EmailAddress'], post['Sex'])
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
@@ -350,7 +352,7 @@ def deletecustomer():
 	cursor = cnx.cursor()
 	insert_stmt = ("DELETE FROM Customer WHERE idCustomer = %s")
 	
-
+	post = request.get_json()
 	data = (str(post['idCustomer']),)
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
@@ -362,49 +364,45 @@ def modifyShowing():
 	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
 	cursor = cnx.cursor()
 	insert_stmt = "update Customer set FirstName = %s, LastName = %s, Sex = %s, EmailAddress = %s where idCustomer = %s"
+	post = request.get_json()
 	data = (post['FirstName'], post['LastName'], post['Sex'], post['EmailAddress'], str(post['CustomerID']))
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()
 	return data
 
-@app.route("/attend")
+@app.route("/attending", methods=['GET'])
 def attendLoad():
 	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
 	cursor = cnx.cursor()
 
 	#query = ("select * from Attend")
-	query = ("select Customer.FirstName, Customer.LastName, Showing.idShowing, Showing.ShowingDateTime, Movie.idMovie, Movie.MovieName, Attend.Rating from Customer join Attend on Customer.idCustomer = Attend.Customer_idCustomer join Showing on Showing.idShowing = Attend.Showing_idShowing join Movie on Movie.idMovie = Showing.Movie_idMovie order by Attend.Rating")
+	query = ("select Customer_idCustomer, Customer.FirstName, Customer.LastName, Showing.idShowing, DATE_FORMAT(Showing.ShowingDateTime, '%Y-%m-%s %T.%f'), Movie.idMovie, Movie.MovieName, Attend.Rating from Customer join Attend on Customer.idCustomer = Attend.Customer_idCustomer join Showing on Showing.idShowing = Attend.Showing_idShowing join Movie on Movie.idMovie = Showing.Movie_idMovie order by Attend.Rating")
 	cursor.execute(query)
 
 	attends = cursor.fetchall()
-	json_result = json.dumps(attends)
-	print(json_result)
+	json_attends = json.dumps(attends)
+	print(attends)
 	cursor.close()
 	cnx.close()
-	return json_result
+	return json_attends
 
 
 @app.route("/sqlinject")
 def sqlInjection():
-    return render_template('sqlinject.html')
+	return render_template('sqlinject.html')
 
 @app.route("/showsqlinjection", methods=['GET', 'POST'])
 def showSqlInjection():
-    cnx = mysql.connector.connect(user='root', database='MovieTheatre')
-    cursor = cnx.cursor()
+	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+	cursor = cnx.cursor()
 
-    data = (request.form['Customer'],)
-    cursor.execute("select * from Customer where idCustomer='%s'" % data)
+	data = (request.form['Customer'],)
+	cursor.execute("select * from Customer where idCustomer='%s'" % data)
 
-    movies = cursor.fetchall()
-    #cnx.commit()
-    cnx.close()
+	movies = cursor.fetchall()
+	#cnx.commit()
+	cnx.close()
 
-    return render_template('showsqlinject.html',Customer=Customer)
+	return render_template('showsqlinject.html',Customer=Customer)
 
-
-# 404 page
-@app.errorhandler(404)
-def page_not_found(e):
-	return render_template('404.html'), 404

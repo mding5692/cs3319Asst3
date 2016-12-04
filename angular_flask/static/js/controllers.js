@@ -452,7 +452,7 @@ function StaffFormCtrl($scope, $http) {
 	}
 
 	$scope.getAttend = function() {
-		$http.get('/attend').then(function(response) {
+		$http.get('/attending').then(function(response) {
         //First function handles success
         	console.log(response.data)
         	$scope.allAtt = response.data;
