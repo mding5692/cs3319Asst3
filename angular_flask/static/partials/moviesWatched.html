@@ -3,8 +3,12 @@
 
 	<label>Search for customer:</label>
 	<br>
-	<select ng-model="searchedUser" ng-options="item.Id as item.Name for item in customers">
+	<select ng-model="searchedUser" ng-change="showCustMovies();" ng-options="customer.1 for customer in customers">
 		<option value="">Select Customer</option>
 	</select>
-
+	<br>
+	<h3>See the movie name with rating below:</h3>
+	<div ng-repeat="movie in moviesWatched">
+		<p>{{movie}}</p>
+	</div>
 </form>

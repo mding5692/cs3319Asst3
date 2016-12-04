@@ -95,8 +95,8 @@ function BuyTicketCtrl($scope, $http) {
 	}
 }
 
-function SearchUsrCtrl($scope) {
-	$scope.searchedCustomer = "";
+function SearchUsrCtrl($scope, $http) {
+	$scope.searchedUsr = "";
 	$scope.customers = [];
 
 	$http.get('/getCustomers').then(function(response) {
@@ -106,7 +106,6 @@ function SearchUsrCtrl($scope) {
         //Second function handles error
         alert("Unable to grab customers from database");
     });
-
 
 }
 
@@ -490,41 +489,110 @@ function StaffFormCtrl($scope, $http) {
 
 }
 
-function MoviesViewedCtrl($scope) {
+function MoviesViewedCtrl($scope, $http) {
 	$scope.searchedUser = "";
+	$scope.customers = [];
+	$scope.moviesWatched = [];
+	$scope.allMovies = [];
+
+	$http.get('/customers').then(function(response) {
+        //First function handles success
+        $scope.customers = response.data;
+    }, function(response) {
+        //Second function handles error
+        console.log(response);
+        alert("Unable to grab customers from database");
+    });	
+
+	$http.get('/attending').then(function(response) {
+	    $scope.allMovies = response.data;
+	}, function(response) {
+	    	console.log("unable to find");
+	});
+
+	$scope.showCustMovies = function() {
+		$scope.moviesWatched = [];
+		var custID = $scope.searchedUser[0];
+
+		for (var i = 0; i < $scope.allMovies.length; i++) {
+			if ($scope.allMovies[i][0] == custID) {
+				$scope.moviesWatched.push($scope.allMovies[i][6]);
+				$scope.moviesWatched.push($scope.allMovies[i][7]);
+			}
+		}
+	}
 }
 
 function RateMovieController($scope) {
+
 }
 
 function MovieRatingCtrl($scope, $http) {
-	$scope.customerName = "";
-	$scope.selectedMovie = "";
-	$scope.movies=[];
+	$scope.selectedCustomer = "";
+	$scope.selectedShow = "";
+	$scope.allShows = [];
+	$scope.shows=[];
 	$scope.customers = [];
+	$scope.newRating = 0;
 
 	$http.get('/getCustomers').then(function(response) {
         //First function handles success
-        $scope.customers = cleanData(response.data,"customers");
+        $scope.customers = response.data;
     }, function(response) {
         //Second function handles error
         console.log(response);
         alert("Unable to grab customers from database");
     });
 
-	$http.get('/getMovies').then(function(response) {
+	$http.get('/attending').then(function(response) {
         //First function handles success
         console.log(response);
-    	$scope.movies=response.data;
+    	$scope.allShows=response.data;
 
     }, function(response) {
         //Second function handles error
         console.log(response);
         alert("Unable to grab customers from database");
     });
+
+    $scope.getCustShows = function() {
+    	$scope.shows = [];
+    	var custID = $scope.selectedCustomer[0];
+
+		for (var i = 0; i < $scope.allShows.length; i++) {
+			if ($scope.allShows[i][0] == custID) {
+				$scope.shows.push($scope.allShows[i]);
+			}
+		}
+
+    }
+
+	$scope.rateShow = function() {
+		if ($scope.newRating > 0 && $scope.newRating <= 5) {
+    		var custID = $scope.selectedCustomer[0];
+			var showArr = $scope.selectedShow.split(" ");
+			var showing = showArr[3];
+
+			var data = {
+				rating: $scope.newRating,
+				custID : custID,
+				showing : showing
+			};
+
+			$http.post('/changeRating', data).then(function(response) {
+				alert("new rating set");
+			}, function(response) {
+				console.log(response);
+			});
+
+		} else {
+			alert("Rating has to be number from 1 to 5, try again!");
+		}
+	}
 
 
 }
+
 
 function SearchShowController($scope) {
 

@@ -2,8 +2,16 @@
 <form id="searchUserForm" ng-controller="SearchUsrCtrl">
 
 	<label>Search for user:</label>
-	<select ng-model="searchedUsr">
-
+	<select ng-model="searchedUsr" ng-options="customer for customer in customers">
+		<option value="">Select Customer</option>
 	</select>
+
+	<h3>Customer Information below:</h3>
+	<div>
+		<p>Customer ID: {{searchedUsr.0}}</p>
+		<p>Sex: {{searchedUsr.4}}</p>
+		<p>Customer name: {{searchedUsr.1}} {{searchedUsr.2}}</p>
+		<p>Email: {{searchedUsr.3}}</p>
+	</div>
 
 </form>

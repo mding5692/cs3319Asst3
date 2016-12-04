@@ -1,14 +1,17 @@
 <h2>Select your name and show to rate the movie</h2>
 <form id="rateMovieForm" ng-controller="MovieRatingCtrl">
 	<label>Pick your name:</label>	
-	<select ng-model="customerName" ng-options="customer for customer in customers">
+	<select ng-model="selectedCustomer" ng-change="getCustShows();" ng-options="customer.1 for customer in customers">
 		<option value="">Select Customer</option>
 	</select>
 	<br>
 	<label>Pick the show:</label>
-	<select ng-model="selectedMovie" ng-options="movie for movie in movies">
-		<option value="">Select Movie</option>
+	<select ng-model="selectedShow" ng-options="show.6 for show in shows">
+		<option value="">Select Show</option>
 	</select>
+	<br>
+	<p>Rate from 1 to 5</p>
+	<input type="number" ng-model="newRating" />
 	<br>
 	<button class="btn btn-default" ng-click="rateShow()">Rate Movie</button>
 </form>

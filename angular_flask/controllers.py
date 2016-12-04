@@ -12,7 +12,7 @@ from angular_flask import app
 @app.route('/')
 @app.route('/profile')
 @app.route('/search')
-@app.route('/movies')
+@app.route('/moviesWatched')
 @app.route('/rate')
 @app.route('/attend')
 @app.route('/staff')
@@ -70,24 +70,6 @@ def getMovies():
 	cnx.close()
 	print(str(json_movies))
 	return str(json_movies)
-
-
-@app.route('/getShowings', methods=['GET'])
-def getShowings():
-	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
-	cursor = cnx.cursor()
-
-	query = ("select FirstName, LastName from Customer")
-	cursor.execute(query)
-	returnString = []
-	for i in cursor:
-		returnString.append(i)
-
-	json_result = json.dumps(returnString)
-	cursor.close()
-	cnx.close()
-	#print(str(json_result))
-	return str(json_result)
 	
 @app.route("/movie")
 def movieList():
@@ -269,9 +251,6 @@ def showingList():
 	cnx.close()
 	return json_result
 
-
-
-
 @app.route("/addShowing", methods=['POST'])
 def addShowing():
 	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
@@ -387,6 +366,17 @@ def attendLoad():
 	cnx.close()
 	return json_attends
 
+@app.route('/changeRating', methods=['POST'])
+def changeRating():
+	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+	cursor = cnx.cursor()
+	insert_stmt = "update Attend set Rating = %s where Customer_idCustomer = %s and Showing_idShowing = %s"
+	post = request.get_json()
+	data = (str(post['rating']), str(post['custID']), str(post['showing']))
+	cursor.execute(insert_stmt,data)
+	cnx.commit()
+	cnx.close()
+	return data
 
 @app.route("/sqlinject")
 def sqlInjection():
