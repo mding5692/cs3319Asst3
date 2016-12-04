@@ -607,26 +607,91 @@ function SearchShowController($scope) {
 
 }
 
-function SearchFormController($scope) {
+function SearchFormController($scope, $http) {
 	$scope.selectedGenre = "";
 	$scope.selectedStartDate = "";
 	$scope.selectedEndDate = "";
 	$scope.emptySeats = false;
 	$scope.movieName = "";
+	$scope.allSelection = [];
+	$scope.genres = [];
+	$scope.uniqGenres = [];
+	$scope.uniqDates = [];
+	$scope.showings = [];
+	var testUniqGenre = {};
+
+	var selectionCriteria = {
+		genre: $scope.selectedGenre,
+		startDate: $scope.selectedStartDate,
+		endDate: $scope.selectedEndDate,
+		emptySeats: $scope.emptySeats,
+		movieName: $scope.movieName
+	}
 
 	$scope.toggleEmptySeats = function() {
 		$scope.emptySeats = !($scope.emptySeats);
 	};
 
-	$scope.submitInfo = function() {
-		showNotFilledWarning();
-	};	
+	$http.get('/genres').then(function(response) {
+		console.log(response.data);
+		$scope.genres = response.data;
+	}, function(response) {
+		console.log(response.data);
+	});
 
-	function showNotFilledWarning() {
-		alert("Please fill out some info to search with");
+	$http.get('/uniqGenres').then(function(response) {
+		$scope.uniqGenres = response.data;
+	}, function(resp) {
+		console.log(resp);
+	})
+
+	$http.get('/uniqDates').then(function(response) {
+		$scope.uniqDates = response.data;
+	}, function(resp) {
+		console.log(resp);
+	})
+
+
+	$http.get('/showings').then(function(response) {
+		console.log(response.data);
+		$scope.showings = response.data;
+	}, function(response) {
+		console.log(response.data);
+	});
+
+	$scope.checkDates = function() {
+		if ($scope.selectedStartDate == "") {
+			alert("Start Date can't be empty");
+		}
+		if ($scope.selectedStartDate > $scope.selectedEndDate) {
+			alert("End date can't be before Start Date");
+		}
 	}
 
+	$scope.search = function() {
+		if ($scope.emptySeats = false) {
+			alert("Some shows might not have available seats unless checkbox is checked!");
+		}
+	}
  }
+
+function SqlInjectCtrl($scope, $http) {
+	$scope.result = [];
+	$scope.input = "";
+
+	var data = {
+		input: $scope.input
+	}
+
+	$scope.inject = function() {
+		console.log($scope.input);
+		$http.post('/showsqlinjection', data).then(function(resp) {
+			$scope.results = resp.data;
+		}, function(resp) {
+			console.log(resp);
+		});
+	}
+}
 
 function AttendController($scope) {
 	

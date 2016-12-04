@@ -16,6 +16,7 @@ from angular_flask import app
 @app.route('/rate')
 @app.route('/attend')
 @app.route('/staff')
+@app.route("/sql")
 
 def basic_pages(**kwargs):
 	return make_response(open('angular_flask/index.html').read())
@@ -267,6 +268,34 @@ def addShowing():
 	cnx.close()
 	return data
 
+@app.route("/uniqGenres", methods=['GET'])
+def getUniqGenres():
+	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+	cursor = cnx.cursor()
+
+	query = ("SELECT * FROM Genre group by Genre.Genre")
+	cursor.execute(query)
+
+	customers = cursor.fetchall()
+	json_result = json.dumps(customers)
+	cursor.close()
+	cnx.close()
+	return json_result
+
+@app.route("/uniqDates", methods=['GET'])
+def getUniqDates():
+	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
+	cursor = cnx.cursor()
+
+	query = ("SELECT DATE_FORMAT(Showing.ShowingDateTime, '%Y-%m-%s %T.%f') FROM Showing group by Showing.ShowingDateTime")
+	cursor.execute(query)
+
+	customers = cursor.fetchall()
+	json_result = json.dumps(customers)
+	cursor.close()
+	cnx.close()
+	return json_result
+
 
 @app.route("/deleteShowing", methods=['POST'])
 def deleteShowing():
@@ -382,6 +411,7 @@ def attendLoad():
 	cnx.close()
 	return json_attends
 
+
 @app.route('/changeRating', methods=['POST'])
 def changeRating():
 	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
@@ -394,21 +424,19 @@ def changeRating():
 	cnx.close()
 	return data
 
-@app.route("/sqlinject")
-def sqlInjection():
-	return render_template('sqlinject.html')
-
-@app.route("/showsqlinjection", methods=['GET', 'POST'])
+@app.route("/showsqlinjection", methods=['POST'])
 def showSqlInjection():
 	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
 	cursor = cnx.cursor()
 
-	data = (request.form['Customer'],)
-	cursor.execute("select * from Customer where idCustomer='%s'" % data)
+	post = request.get_json()
+	data = post['input']
+	cursor.execute(data)
 
-	movies = cursor.fetchall()
+	info = cursor.fetchall()
+	json_info = json.dumps(info)
 	#cnx.commit()
 	cnx.close()
+	return json_info
 
-	return render_template('showsqlinject.html',Customer=Customer)
 

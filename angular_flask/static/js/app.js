@@ -30,6 +30,9 @@ angular.module('MovieFlask', ['angularFlaskServices'])
 		}).when('/staff', {
 			templateUrl: 'static/partials/staff.html',
 			controller: StaffController
+		}).when('/sql', {
+			templateUrl: 'static/partials/sqlInject.html',
+			controller: StaffController
 		})
 		.otherwise({
 			redirectTo: '/'

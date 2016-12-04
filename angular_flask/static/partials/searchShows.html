@@ -1,21 +1,18 @@
 <h2>Choose based on below criteria to search for suitable shows</h2>
 <form id="searchForm" ng-controller="SearchFormController">
 	<label>Choose genre:</label>
-	<select ng-model="selectedGenre" ng-options="">
-
+	<select ng-model="selectedGenre" ng-change="search();" ng-options="genre.0 for genre in uniqGenres">
 	</select>
 	<br>
 	<label>Choose start date:</label>
-	<select ng-model="selectedStartDate"></select>
+	<select ng-model="selectedStartDate" ng-options="startDate for startDate in uniqDates"></select>
 	<br>
 	<label>Choose end date:</label>
-	<select ng-model="selectedEndDate"></select>
+	<select ng-model="selectedEndDate" ng-change="checkDates(); search();" ng-options="endDate for endDate in uniqDates"></select>
 	<br>
 	<span>Select shows that still have seats available   </span>
-	<input ng-click="toggleEmptySeats();" type="checkbox" />
+	<input ng-click="toggleEmptySeats(); search();" type="checkbox" />
 	<br>
-	<label>Or choose a movie title:</label><input ng-model="movieName" type="text" />
-	<br>
-	<button class="btn btn-default" ng-click="submitInfo()" style="margin-left:5.5vw;">Search</button>
+	<label>Or choose a movie title:</label><input ng-model="movieName" ng-change="search();" type="text" />
 
 </form>
