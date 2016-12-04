@@ -125,7 +125,6 @@ function StaffFormCtrl($scope, $http) {
 	$scope.allMovies = [];
 	// Add genre for movie
 	$scope.addMovieNoForGenre = 0;
-	$scope.addMovieNameForGenre = "";
 	$scope.addMovieGenre = "";
 	// Del genre from movie
 	$scope.delMovieNoForGenre = 0;
@@ -152,7 +151,6 @@ function StaffFormCtrl($scope, $http) {
 	// Del Showing
 	$scope.delShowingNo = 0;
 	$scope.delShowingMovieNo=0;
-	$scope.delShowingDate = 0;
 	$scope.delShowingRmNo = 0;
 	// Edit Showing
 	$scope.modShowingNo = 0;
@@ -252,6 +250,53 @@ function StaffFormCtrl($scope, $http) {
     	});
 	}
 
+	$scope.addRm = function() {
+		var rmData = {
+			RoomNumber : $scope.addRmNo,
+			Capacity : $scope.addRmCap
+		};
+
+		var data = JSON.stringify(rmData)
+
+		$http.post('/addTheatreRoom', data).then(function(data) {
+			console.log(data);
+			alert("Data is sent");
+		}, function(data) {
+			console.log(data)
+		});
+	}
+
+	$scope.delRm = function() {
+		var rmData = {
+			RoomNumber : $scope.delRmNo
+		};
+
+		var data = JSON.stringify(rmData)
+
+		$http.post('/deleteTheatreRoom', data).then(function(data) {
+			console.log(data);
+			alert("Data is sent");
+		}, function(data) {
+			console.log(data)
+		});
+	}
+
+	$scope.modRm = function() {
+		var rmData = {
+			RoomNumber : $scope.modRmNo,
+			Capacity : $scope.modRmCap
+		};
+
+		var data = JSON.stringify(rmData)
+
+		$http.post('/modifyTheatreRoom', data).then(function(data) {
+			console.log(data);
+			alert("Data is sent");
+		}, function(data) {
+			console.log(data)
+		});
+	}
+
 	// Gets all shows
 	$scope.getShowings = function() {
 		$http.get('/showings').then(function(response) {
@@ -263,6 +308,159 @@ function StaffFormCtrl($scope, $http) {
         	console.log(response);
         	alert("Unable to grab showings from database");
     	});
+	}
+
+	$scope.addGenre = function() {
+		var genreData = {
+			Movie_idMovie : $scope.addMovieNoForGenre,
+			Genre : $scope.addMovieGenre
+		};
+
+		var data = JSON.stringify(genreData)
+
+		$http.post('/addGenre', data).then(function(data) {
+			console.log(data);
+			alert("Data is sent");
+		}, function(data) {
+			console.log(data)
+		});	
+	}
+
+	$scope.delGenre = function() {
+		var genreData = {
+			Movie_idMovie : $scope.delMovieNoForGenre,
+			Genre : $scope.delMovieGenre
+		};
+
+		var data = JSON.stringify(genreData)
+
+		$http.post('/deleteGenre', data).then(function(data) {
+			console.log(data);
+			alert("Data is sent");
+		}, function(data) {
+			console.log(data)
+		});	
+	}
+
+	$scope.addShowing = function() {
+		var showingData = {
+			idshowing : $scope.addShowingNo,
+			ShowingDateTime : $scope.addShowingDate,
+			Movie_idMovie : $scope.addShowingMovieNo,
+			TheatreRoom_RoomNumber : $scope.addShowingRmNo,
+			TicketPrice : $scope.addShowingPrice
+		};
+
+		var data = JSON.stringify(showingData);
+
+		$http.post('/addShowing', data).then(function(data) {
+			console.log(data);
+			alert("Data is sent");
+		}, function(data) {
+			console.log(data)
+		});	
+	}
+
+
+	$scope.delShowing = function() {
+		var showingData = {
+			idshowing : $scope.delShowingNo,
+			Movie_idMovie : $scope.delShowingMovieNo,
+			TheatreRoom_RoomNumber : $scope.delShowingRmNo
+		};
+
+		var data = JSON.stringify(showingData);
+
+		$http.post('/deleteShowing', data).then(function(data) {
+			console.log(data);
+			alert("Data is sent");
+		}, function(data) {
+			console.log(data)
+		});	
+	}
+
+	$scope.modShowing = function() {
+		var showingData = {
+			idshowing : $scope.modShowingNo,
+			ShowingDateTime : $scope.modShowingDate,
+			Movie_idMovie : $scope.modShowingMovieNo,
+			TheatreRoom_RoomNumber : $scope.modShowingRmNo,
+			TicketPrice : $scope.modShowingPrice
+		};
+
+		var data = JSON.stringify(showingData);
+
+		$http.post('/modifyShowing', data).then(function(data) {
+			console.log(data);
+			alert("Data is sent");
+		}, function(data) {
+			console.log(data)
+		});			
+	}
+
+	$scope.addCust = function() {
+		var custData = {
+			idCustomer : $scope.addCustNo,
+			FirstName : $scope.addCustFName,
+			LastName : $scope.addCustLName,
+			EmailAddress : $scope.addCustEmail,
+			Sex : $scope.addCustSex
+		};
+
+		var data = JSON.stringify(custData);
+
+		$http.post('/addCustomer', data).then(function(data) {
+			console.log(data);
+			alert("Data is sent");
+		}, function(data) {
+			console.log(data)
+		});			
+	}
+
+	$scope.modCust = function() {
+		var custData = {
+			CustomerID : $scope.modCustNo,
+			FirstName : $scope.modCustFName,
+			LastName : $scope.modCustLName,
+			EmailAddress : $scope.modCustEmail,
+			Sex : $scope.modCustSex
+		};
+
+		var data = JSON.stringify(custData);
+
+		$http.post('/modifycustomer', data).then(function(data) {
+			console.log(data);
+			alert("Data is sent");
+		}, function(data) {
+			console.log(data)
+		});			
+	}
+
+	$scope.delCust = function() {
+		var custData = {
+			idCustomer : $scope.delCustNo
+		};
+
+		var data = JSON.stringify(custData);
+
+		$http.post('/deletecustomer', data).then(function(data) {
+			console.log(data);
+			alert("Data is sent");
+		}, function(data) {
+			console.log(data)
+		});			
+	}
+
+	$scope.getAttend = function() {
+		$http.get('/attend').then(function(response) {
+        //First function handles success
+        	console.log(response.data)
+        	$scope.allAtt = response.data;
+    	}, function(response) {
+        //Second function handles error
+        	console.log(response);
+        	alert("Unable to grab genres from database");
+    	});	
 	}
 
 		// Gets all shows
@@ -289,7 +487,6 @@ function StaffFormCtrl($scope, $http) {
         	alert("Unable to grab genres from database");
     	});
 	}
-
 
 }
 

@@ -76,8 +76,6 @@
 		<p> You need a unique movie ID or movie name and movie genre to add</p>
 		<span>Movie ID:</span>
 		<input type="number" ng-model="addMovieNoForGenre" />
-		<span>Movie Name:</span>
-		<input type="text" ng-model="addMovieNameForGenre" />
 		<span>Movie Genre:</span>
 		<input type="text" ng-model="addMovieGenre" />
 		<button class="btn btn-default" ng-click="addGenre()">Add Genre to Movie</button>
@@ -88,8 +86,6 @@
 		<p> You need a unique movie ID or movie name and movie genre to delete</p>
 		<span>Movie ID:</span>
 		<input type="number" ng-model="delMovieNoForGenre" />
-		<span>Movie Name:</span>
-		<input type="text" ng-model="delMovieNameForGenre" />
 		<span>Movie Year:</span>
 		<input type="number" ng-model="delMovieYr" />
 		<button class="btn btn-default" ng-click="delGenre()">Delete genre from movie</button>
@@ -157,13 +153,11 @@
 	<!--Deletes movie -->
 	<div id="delShowingPg" ng-show="showDelShowing">
 		<h3>Deleting Showing</h3>
-		<p> You need a unique showing ID or showing date, movie id, room number</p>
+		<p> You need a unique showing ID and movie id, room number</p>
 		<span>Showing ID:</span>
 		<input type="number" ng-model="delShowingNo" />
 		<span>Movie ID:</span>
 		<input type="number" ng-model="delShowingMovieNo" />
-		<span>Date:</span>
-		<input type="datetime" ng-model="delShowingDate" />
 		<span>Room num:</span>
 		<input type="number" ng-model="delShowingRmNo" />
 		<button class="btn btn-default" ng-click="delShowing()">Delete Showing</button>
@@ -259,7 +253,8 @@
 		<h3>List Movies Attended</h3>
 		<button class="btn btn-default" ng-click="getAttend(); showAttMovieList=true">Press here</button>
 		<div ng-show="showAttMovieList" ng-repeat="att in allAtt">
-  			<span>Customer ID: {{att.custId}},</span> <span>Movie ID: {{att.mID}}</span> <span>Showing ID: {{att.showing}}</span><span>Rating: {{att.rating}}</span> <span>Movie: {{att.movie}}</span><span>Movie Yr: {{att.yr}}</span>
+  			<!--span>Customer ID: {{att.custId}},</span> <span>Movie ID: {{att.mID}}</span> <span>Showing ID: {{att.showing}}</span><span>Rating: {{att.rating}}</span> <span>Movie: {{att.movie}}</span><span>Movie Yr: {{att.yr}}</span-->
+  			<p>{{ att }}</p>
 		</div>
 	</div>
 		<!--Lists all movies -->

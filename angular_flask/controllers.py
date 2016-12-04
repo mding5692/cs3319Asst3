@@ -176,11 +176,12 @@ def addGenre():
 		"VALUES (%s, %s)"
 	)
 
-	data = (request.form['Genre'], request.form['Movie_idMovie'])
+	post = request.get_json()
+	data = (post['Genre'], str(post['Movie_idMovie']))
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()
-
+	return data
 
 @app.route("/deleteGenre", methods=['POST'])
 def deleteGenre():
@@ -188,11 +189,12 @@ def deleteGenre():
 	cursor = cnx.cursor()
 	insert_stmt = ("DELETE FROM Genre WHERE Genre = %s and Movie_idMovie = %s")
 	
-
-	data = (request.form['Genre'], request.form['Movie_idMovie'],)
+	post = request.get_json()
+	data = (post['Genre'], str(post['Movie_idMovie']),)
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()
+	return data
 
 
 @app.route("/rooms")
@@ -219,10 +221,12 @@ def addTheatreRoom():
 		"VALUES (%s, %s)"
 	)
 
-	data = (request.form['RoomNumber'], request.form['Capacity'])
+	post = request.get_json()
+	data = (str(post['RoomNumber']), str(post['Capacity']))
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()
+	return data
 
 
 @app.route("/deleteTheatreRoom", methods=['POST'])
@@ -231,11 +235,12 @@ def deleteTheatreRoom():
 	cursor = cnx.cursor()
 	insert_stmt = ("DELETE FROM TheatreRoom WHERE RoomNumber = %s")
 	
-
-	data = (request.form['RoomNumber'],)
+	post = request.get_json()
+	data = (str(post['RoomNumber']),)
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()
+	return data
 
 
 @app.route("/modifyTheatreRoom", methods=['GET','POST'])
@@ -243,19 +248,19 @@ def modifyTheatreRoom():
 	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
 	cursor = cnx.cursor()
 	insert_stmt = "update Rooms set Capacity = %s where RoomNumber = %s"
-	data = (request.form['Capacity'], request.form['RoomNumber'])
+	post = request.get_json()	
+	data = (str(post['Capacity']), str(post['RoomNumber']))
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()
-
-
+	return data
 
 @app.route("/showings")
 def showingList():
 	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
 	cursor = cnx.cursor()
 
-	query = ("SELECT idShowing, Movie_idMovie, TheatreRoom_RoomNumber, TicketPrice, DATE_FORMAT(ShowingDateTime, '%Y-%m-%d %T.%f') FROM Showing ORDER BY ShowingDateTime")
+	query = ("SELECT idShowing, Movie_idMovie, TheatreRoom_RoomNumber, TicketPrice, DATE_FORMAT(ShowingDateTime, '%Y-%m-%s %T.%f') FROM Showing ORDER BY ShowingDateTime")
 	cursor.execute(query)
 
 	showings = cursor.fetchall()
@@ -273,39 +278,40 @@ def addShowing():
 	cursor = cnx.cursor()
 	insert_stmt = (
 		"INSERT INTO Showing(idshowing, ShowingDateTime, Movie_idMovie, TheatreRoom_RoomNumber, TicketPrice) "
-		"VALUES (%d, %s, %d, %d, %d)"
+		"VALUES (%s, %s, %s, %s, %s)"
 	)
 
-	data = (request.form['idshowing'], request.form['ShowingDateTime'], request.form['Movie_idMovie'], request.form['TheatreRoom_RoomNumber'], request.form['TicketPrice'])
+	post = request.get_json()
+	data = (str(post['idshowing']), str(post['ShowingDateTime']), str(post['Movie_idMovie']), str(post['TheatreRoom_RoomNumber']), str(post['TicketPrice']))
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()
+	return data
 
 
 @app.route("/deleteShowing", methods=['POST'])
 def deleteShowing():
 	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
 	cursor = cnx.cursor()
-	insert_stmt = "delete from Showing where idshowing = %d and Movie_idMovie = %d and TheatreRoom_RoomNumber = %d"    
+	insert_stmt = "delete from Showing where idshowing = %s and Movie_idMovie = %s and TheatreRoom_RoomNumber = %s"    
 
-	data = (request.form['idshowing'], request.form['Movie_idMovie'], request.form['TheatreRoom_RoomNumber'])
+	post = request.get_json()
+	data = (str(post['idshowing']), str(post['Movie_idMovie']), str(post['TheatreRoom_RoomNumber']))
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()
-
-
-
+	return data
 
 @app.route("/modifyShowing", methods=['GET','POST'])
 def modifyShow():
 	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
 	cursor = cnx.cursor()
 	insert_stmt = "update Showing set ShowingDateTime = %s, TicketPrice = %s where (Movie_idMovie = %s and TheatreRoom_RoomNumber = %s and idshowing = %s)"
-	data = (request.form['ShowingDateTime'], request.form['TicketPrice'], request.form['Movie_idMovie'], request.form['TheatreRoom_RoomNumber'], request.form['idshowing'])
+	data = (str(post['ShowingDateTime']), str(post['TicketPrice']), str(post['Movie_idMovie']), str(post['TheatreRoom_RoomNumber']), str(post['idshowing']))
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()
-
+	return data
 
 @app.route("/customers")
 def customerList():
@@ -329,15 +335,14 @@ def addCustomer():
 	cursor = cnx.cursor()
 	insert_stmt = (
 		"INSERT INTO Customer (idCustomer,FirstName, LastName, EmailAddress, Sex) "
-		"VALUES (%d, %s, %s, %s, %s)"
+		"VALUES (%s, %s, %s, %s, %s)"
 	)
 
-	data = (request.form['idCustomer'], request.form['FirstName'], request.form['LastName'], request.form['EmailAddress'], request.form['Sex'])
+	data = (str(post['idCustomer']), post['FirstName'], post['LastName'], post['EmailAddress'], post['Sex'])
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()
-
-
+	return data
 
 @app.route("/deletecustomer", methods=['POST'])
 def deletecustomer():
@@ -346,38 +351,38 @@ def deletecustomer():
 	insert_stmt = ("DELETE FROM Customer WHERE idCustomer = %s")
 	
 
-	data = (request.form['idCustomer'],)
+	data = (str(post['idCustomer']),)
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()
-
-
-
+	return data
 
 @app.route("/modifycustomer", methods=['GET','POST'])
 def modifyShowing():
 	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
 	cursor = cnx.cursor()
 	insert_stmt = "update Customer set FirstName = %s, LastName = %s, Sex = %s, EmailAddress = %s where idCustomer = %s"
-	data = (request.form['FirstName'], request.form['LastName'], request.form['Sex'], request.form['EmailAddress'], request.form['CustomerID'])
+	data = (post['FirstName'], post['LastName'], post['Sex'], post['EmailAddress'], str(post['CustomerID']))
 	cursor.execute(insert_stmt,data)
 	cnx.commit()
 	cnx.close()
-
+	return data
 
 @app.route("/attend")
 def attendLoad():
 	cnx = mysql.connector.connect(user='root', database='MovieTheatre')
 	cursor = cnx.cursor()
 
-	query = ("select * from Attend")
+	#query = ("select * from Attend")
 	query = ("select Customer.FirstName, Customer.LastName, Showing.idShowing, Showing.ShowingDateTime, Movie.idMovie, Movie.MovieName, Attend.Rating from Customer join Attend on Customer.idCustomer = Attend.Customer_idCustomer join Showing on Showing.idShowing = Attend.Showing_idShowing join Movie on Movie.idMovie = Showing.Movie_idMovie order by Attend.Rating")
 	cursor.execute(query)
 
 	attends = cursor.fetchall()
+	json_result = json.dumps(attends)
+	print(json_result)
 	cursor.close()
 	cnx.close()
-
+	return json_result
 
 # 404 page
 @app.errorhandler(404)
